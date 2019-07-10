@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HawkPay</string>
+    <string name="empty_screen">We do not have anything\nhere right now. Please Retry</string>
+    <string name="btn_retry">Retry</string>
+</resources>
