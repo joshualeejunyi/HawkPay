@@ -5,37 +5,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.EditText;
 import android.widget.Toast;
-
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.Base64;
-
 
 
 public class OrderDB extends AsyncTask<String, Void, Boolean> {
@@ -71,7 +50,6 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
         price = Double.parseDouble(args[4]);
         storename = args[5];
         username = args[6];
-        JSONObject json = new JSONObject();
         Connection conn;
         Boolean result = false;
 
@@ -81,8 +59,9 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
         System.out.println(payload);
         System.out.println(price);
 
+        String payloadfinal = "Payload=".concat(payload);
 
-        System.out.println(json);
+
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -126,82 +105,25 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
                 return false;
             }
 
-            HttpURLConnection httpcon = null;
-            String url = "http://ec2-18-223-22-246.us-east-2.compute.amazonaws.com/api/MQTT";
-            String jsonresult = "";
+            String urlstr = "http://ec2-18-223-22-246.us-east-2.compute.amazonaws.com/api/MQTT";
+            URL url = new URL(urlstr);
 
-            try {
-                json.put("payload", payload);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            HttpURLConnection urlconn = (HttpURLConnection) url.openConnection();
+            urlconn.setRequestMethod("POST");
+            urlconn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded; charset=utf-8");
 
-            String jsonstr = "{ \"payload\": \"1,2,3\"}";
-            System.out.println(jsonstr);
+            OutputStream os = urlconn.getOutputStream();
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(os, "UTF-8"));
+            writer.write(payloadfinal);
+            writer.flush();
+            writer.close();
+            os.close();
 
-            OrderDB orderting = new OrderDB(context);
+            urlconn.connect();
 
-
-            // Instantiate the RequestQueue.
-            RequestQueue queue = Volley.newRequestQueue(context.getApplicationContext());
-
-            // Request a string response from the provided URL.
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            System.out.println(response);
-
-                        }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.println(error);
-                }
-            }){
-                @Override
-                public byte[] getBody() throws AuthFailureError {
-                    return jsonstr.getBytes();
-                }
-            };
-            // Add the request to the RequestQueue.
-            queue.add(stringRequest);
-            queue.start();
-
-//            try {
-//                httpcon = (HttpURLConnection) ((new URL (url).openConnection()));
-//                httpcon.setDoOutput(true);
-//                httpcon.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-//                httpcon.setRequestProperty("Accept", "application/json");
-//                httpcon.setRequestMethod("POST");
-//                httpcon.connect();
-//
-//                //Write
-//                OutputStream os = httpcon.getOutputStream();
-//                os.write(jsonstr.getBytes("UTF-8"));
-//                os.close();
-//
-//                //Read
-//                BufferedReader br = new BufferedReader(new InputStreamReader(httpcon.getInputStream(),"UTF-8"));
-//
-//                String line = null;
-//                StringBuilder sb = new StringBuilder();
-//
-//                while ((line = br.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                br.close();
-//                jsonresult = sb.toString();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (httpcon != null) {
-//                    httpcon.disconnect();
-//                }
-//            }
-//
-//            System.out.println("GRR" + jsonresult);
+            String httpresult = urlconn.getResponseMessage()+"";
+            System.out.println("PLSPLSPLSPLSPLS");
+            System.out.println(httpresult);
 
         } catch (Exception e) {
             System.out.println(e);

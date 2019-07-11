@@ -37,15 +37,15 @@ public class Dashboard extends AppCompatActivity {
         if (getIntent().hasExtra("cxa.overclockedtoaster.hawkpay.username")) {
             username = getIntent().getExtras().getString("cxa.overclockedtoaster.hawkpay.username");
         }
-
-        ImageView paybutton = (ImageView) findViewById(R.id.payicon);
-        paybutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent gotopayment = new Intent(getApplicationContext(), PayDetails.class);
-                startActivity(gotopayment);
-            }
-        });
+//
+//        ImageView paybutton = (ImageView) findViewById(R.id.payicon);
+//        paybutton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent gotopayment = new Intent(getApplicationContext(), PayDetails.class);
+//                startActivity(gotopayment);
+//            }
+//        });
 
         ImageButton hawkfastbutton = (ImageButton) findViewById(R.id.hawkfastbutton);
         hawkfastbutton.setOnClickListener(new View.OnClickListener() {
