@@ -3,11 +3,13 @@ package cxa.overclockedtoaster.hawkpay;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import java.text.DecimalFormat;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Dashboard extends AppCompatActivity {
@@ -56,6 +58,18 @@ public class Dashboard extends AppCompatActivity {
                 gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.amount", amount);
                 gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.username", username);
                 startActivity(gotohawkfastform);
+            }
+        });
+
+        Button uploadbutton = (Button) findViewById(R.id.rewardbutton);
+        uploadbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent gotorewards = new Intent(getApplicationContext(), PhotoReward.class);
+                gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.userid", userid);
+                gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.amount", amount);
+                gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.username", username);
+                startActivity(gotorewards);
             }
         });
     }

@@ -59,6 +59,7 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
         System.out.println(payload);
         System.out.println(price);
 
+        payload = payload.replace(",", "");
         String payloadfinal = "Payload=".concat(payload);
 
 
