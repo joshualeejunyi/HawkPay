@@ -1,7 +1,9 @@
 package cxa.overclockedtoaster.hawkpay;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -12,6 +14,11 @@ import android.provider.MediaStore;
 import android.renderscript.ScriptGroup;
 import android.util.Base64;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -140,8 +147,27 @@ public class RewardsDB extends AsyncTask<String, Void, Boolean> {
         if (result == true) {
             Toast toast = Toast.makeText(context, "ML RESULT:" + mlresult, Toast.LENGTH_LONG);
             toast.show();
-            Intent finish = new Intent(context.getApplicationContext(), PhotoReward.class);
+
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            JsonParser jp = new JsonParser();
+            JsonElement je = jp.parse(mlresult);
+            String prettyJsonString = gson.toJson(je);
+
+            prettyJsonString = prettyJsonString.replace("[", "");
+            prettyJsonString = prettyJsonString.replace("]", "");
+            prettyJsonString = prettyJsonString.replace("{", "");
+            prettyJsonString = prettyJsonString.replace("}", "");
+            prettyJsonString = prettyJsonString.replace("\"", "");
+            prettyJsonString = prettyJsonString.replace(",\n", "");
+            prettyJsonString = prettyJsonString.replace("    label", "Label");
+            prettyJsonString = prettyJsonString.replace("score", "\nScore");
+
+
+
+            Intent finish = new Intent(context.getApplicationContext(), RewardUploaded.class);
+            finish.putExtra("cxa.overclockedtoaster.hawkpay.mlresult", prettyJsonString);
             context.startActivity(finish);
+
         } else {
             Toast toast = Toast.makeText(context, "Error", Toast.LENGTH_SHORT);
             toast.show();
