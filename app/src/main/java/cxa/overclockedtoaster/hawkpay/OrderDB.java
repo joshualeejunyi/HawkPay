@@ -65,7 +65,7 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246/hawkfast","cxa19","cxa19");
+            conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246:1433/hawkfast","cxa19","cxa19");
 
             PreparedStatement stmt1 = conn.prepareStatement("select amount from hawkfast.users where id = ?");
             stmt1.setInt(1, userid);

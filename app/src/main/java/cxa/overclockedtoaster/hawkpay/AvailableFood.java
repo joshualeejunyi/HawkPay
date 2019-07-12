@@ -134,7 +134,7 @@ public class AvailableFood extends AppCompatActivity {
             try
             {
                 Class.forName("com.mysql.jdbc.Driver");
-                Connection conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246/hawkfast","cxa19","cxa19");
+                Connection conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246:1433/hawkfast","cxa19","cxa19");
                 if (conn == null)
                 {
                     success = false;

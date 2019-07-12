@@ -53,7 +53,7 @@ public class CreateAccountDB  extends AsyncTask<String, Void, Boolean> {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246/hawkfast","cxa19","cxa19");
+            conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246:1433/hawkfast","cxa19","cxa19");
 
             PreparedStatement stmt= conn.prepareStatement("insert into hawkfast.users (username, password, salt, hawkfastpartner) values (?, ?, ?, ?)");
 
