@@ -23,6 +23,7 @@ public class OrderSummary extends AppCompatActivity {
     Double price = 0.0;
     Integer foodid = 0;
     String storename = "";
+    String newpayload = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +70,10 @@ public class OrderSummary extends AppCompatActivity {
             payload = getIntent().getExtras().getString("cxa.overclockedtoaster.hawkpay.payload");
         }
 
+        if (getIntent().hasExtra("cxa.overclockedtoaster.hawkpay.newpayload")) {
+            newpayload = getIntent().getExtras().getString("cxa.overclockedtoaster.hawkpay.newpayload");
+        }
+
         TextView foodplacetv = (TextView) findViewById(R.id.foodplace);
         foodplacetv.setText(storename);
 
@@ -111,7 +116,7 @@ public class OrderSummary extends AppCompatActivity {
                 // 1,2,3,4
 
 
-                String[] stuff4db = new String[7];
+                String[] stuff4db = new String[9];
                 stuff4db[0] = userid.toString();
                 stuff4db[1] = storeid.toString();
                 stuff4db[2] = foodid.toString();
@@ -119,6 +124,8 @@ public class OrderSummary extends AppCompatActivity {
                 stuff4db[4] = price.toString();
                 stuff4db[5] = storename;
                 stuff4db[6] = username;
+                stuff4db[7] = newpayload;
+                stuff4db[8] = foodname;
 
                 OrderDB orderfood = new OrderDB (OrderSummary.this);
                 orderfood.execute(stuff4db);

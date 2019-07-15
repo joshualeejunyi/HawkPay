@@ -27,6 +27,8 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
     Double finalbalance = 0.0;
     Integer userid;
     String username;
+    String newpayload;
+    String foodname;
 
     OrderDB(Context context) {
         this.context = context;
@@ -50,6 +52,8 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
         price = Double.parseDouble(args[4]);
         storename = args[5];
         username = args[6];
+        newpayload = args[7];
+        foodname = args[8];
         Connection conn;
         Boolean result = false;
 
@@ -60,7 +64,10 @@ public class OrderDB extends AsyncTask<String, Void, Boolean> {
         System.out.println(price);
 
         payload = payload.replace(",", "");
-        String payloadfinal = "Payload=".concat(payload);
+
+//        payload = "Instructions:".concat(payload).concat(";StalldId:");
+        newpayload = "Instructions:".concat(newpayload).concat(";StallId:").concat(storeid.toString()).concat(";Item:").concat(foodname).concat(";");
+        String payloadfinal = "Payload=".concat(newpayload);
 
 
 

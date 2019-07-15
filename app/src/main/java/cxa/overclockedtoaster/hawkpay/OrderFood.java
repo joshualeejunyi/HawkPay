@@ -238,30 +238,42 @@ public class OrderFood extends AppCompatActivity {
                 JSONObject json = new JSONObject();
                 StringBuilder sb = new StringBuilder("");
                 String orderinfo = "";
+                StringBuilder newpayload = new StringBuilder("");
 
                 if (cb1.isChecked()) {
                     checked1 = true;
                     sb.append("1,");
+                    newpayload.append("1");
                     orderinfo = orderinfo + ingredient1 + " (" + ingredient1pricetext + ")\n";
+                } else {
+                    newpayload.append(" ");
                 }
 
                 if (cb2.isChecked()) {
                     checked2 = true;
                     sb.append("2,");
+                    newpayload.append("2");
                     orderinfo = orderinfo + ingredient2 + " (" + ingredient2pricetext + ")\n";
+                } else {
+                    newpayload.append(" ");
                 }
 
                 if (cb3.isChecked()) {
                     checked3 = true;
                     sb.append("3,");
+                    newpayload.append("3");
                     orderinfo = orderinfo + ingredient3 + " (" + ingredient3pricetext + ")\n";
+                } else {
+                    newpayload.append(" ");
                 }
 
                 if (cb4.isChecked()) {
                     checked4 = true;
                     sb.append("4,");
+                    newpayload.append("4");
                     orderinfo = orderinfo + ingredient4 + " (" + ingredient4pricetext + ")\n";
-
+                } else {
+                    newpayload.append(" ");
                 }
 
                 System.out.println(sb);
@@ -291,6 +303,7 @@ public class OrderFood extends AppCompatActivity {
                     gotosummary.putExtra("cxa.overclockedtoaster.hawkpay.price", calculatedbaseprice);
                     gotosummary.putExtra("cxa.overclockedtoaster.hawkpay.foodid", foodid);
                     gotosummary.putExtra("cxa.overclockedtoaster.hawkpay.payload", numbers);
+                    gotosummary.putExtra("cxa.overclockedtoaster.hawkpay.newpayload", newpayload.toString());
 
                     startActivity(gotosummary);
                 }

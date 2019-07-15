@@ -16,6 +16,7 @@ public class Dashboard extends AppCompatActivity {
     Integer userid = null;
     Double amount = null;
     String username = null;
+    Integer rewardpoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +40,12 @@ public class Dashboard extends AppCompatActivity {
         if (getIntent().hasExtra("cxa.overclockedtoaster.hawkpay.username")) {
             username = getIntent().getExtras().getString("cxa.overclockedtoaster.hawkpay.username");
         }
+
+        if (getIntent().hasExtra("cxa.overclockedtoaster.hawkpay.rewardpoints")) {
+            rewardpoints = getIntent().getExtras().getInt("cxa.overclockedtoaster.hawkpay.rewardpoints");
+        }
 //
-//        ImageView paybutton = (ImageView) findViewById(R.id.payicon);
+//        ImageView paybutton = (ImageView) findViewByI bd(R.id.payicon);
 //        paybutton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -57,6 +62,7 @@ public class Dashboard extends AppCompatActivity {
                 gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.userid", userid);
                 gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.amount", amount);
                 gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.username", username);
+                gotohawkfastform.putExtra("cxa.overclockedtoaster.hawkpay.rewardpoints", rewardpoints);
                 startActivity(gotohawkfastform);
             }
         });
@@ -69,6 +75,7 @@ public class Dashboard extends AppCompatActivity {
                 gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.userid", userid);
                 gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.amount", amount);
                 gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.username", username);
+                gotorewards.putExtra("cxa.overclockedtoaster.hawkpay.rewardpoints", rewardpoints);
                 startActivity(gotorewards);
             }
         });

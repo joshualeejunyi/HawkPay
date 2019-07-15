@@ -80,6 +80,7 @@ public class RewardsDB extends AsyncTask<String, Void, Boolean> {
         userid = Integer.parseInt(args[0]);
         uristr = args[1];
         imagefilepath = args[2];
+        userid = Integer.parseInt(args[3]);
 
 //        Uri uri = Uri.parse(uristr);
 
@@ -121,14 +122,34 @@ public class RewardsDB extends AsyncTask<String, Void, Boolean> {
 
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246:1433/hawkfast","cxa19","cxa19");
-            PreparedStatement stmt= conn.prepareStatement("insert into hawkfast.rewards (userid, timestamp, image) values(?,?,?)");
+            PreparedStatement stmt= conn.prepareStatement("insert into hawkfast.rewards (userid, timestamp, image, approved) values(?,?,?,?)");
             stmt.setInt(1, userid);
             Timestamp ts = new Timestamp(System.currentTimeMillis());
             stmt.setTimestamp(2, ts);
             stmt.setBytes(3, bitmapdata);
+            stmt.setBoolean(4, true);
 
             Integer i = stmt.executeUpdate();
             System.out.println(i + "records inserted");
+
+            PreparedStatement stmt1 = conn.prepareStatement("select rewardpoints from hawkfast.users where id = ?");
+            stmt1.setInt(1, userid);
+
+            ResultSet rs1 = stmt1.executeQuery();
+            Integer dbrewardpoints = 0;
+
+            while (rs1.next()) {
+                dbrewardpoints = rs1.getInt(1);
+            }
+
+            dbrewardpoints += 10;
+
+            PreparedStatement stmt2 = conn.prepareStatement("update hawkfast.users set rewardpoints = ? where id = ?");
+            stmt2.setInt(1, dbrewardpoints);
+            stmt2.setInt(2, userid);
+
+            Integer o = stmt2.executeUpdate();
+            System.out.println(o + " REWARD records updated");
 
             result = true;
 

@@ -23,6 +23,7 @@ public class LoginDB extends AsyncTask<String, Void, Boolean> {
     double amount = 0;
     Boolean dbpartner = null;
     Integer userid = null;
+    Integer rewardpoints;
 
     LoginDB(Context context) {
         this.context = context;
@@ -51,7 +52,7 @@ public class LoginDB extends AsyncTask<String, Void, Boolean> {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection("jdbc:mysql://18.223.22.246:1433/hawkfast","cxa19","cxa19");
 
-            PreparedStatement stmt= conn.prepareStatement("select id, username, password, salt, hawkfastpartner, amount from hawkfast.users");
+            PreparedStatement stmt= conn.prepareStatement("select id, username, password, salt, hawkfastpartner, amount, rewardpoints from hawkfast.users");
 
             ResultSet rs = stmt.executeQuery();
 
@@ -62,6 +63,7 @@ public class LoginDB extends AsyncTask<String, Void, Boolean> {
                 dbsalt = rs.getString(4);
                 dbpartner = rs.getBoolean(5);
                 amount = rs.getDouble(6);
+                rewardpoints = rs.getInt(7);
 
                 try {
                     byte[] salt = Base64.getDecoder().decode(dbsalt);
@@ -98,6 +100,7 @@ public class LoginDB extends AsyncTask<String, Void, Boolean> {
             startIntent.putExtra("cxa.overclockedtoaster.hawkpay.userid", userid);
             startIntent.putExtra("cxa.overclockedtoaster.hawkpay.username", usernamestr);
             startIntent.putExtra("cxa.overclockedtoaster.hawkpay.amount", amount);
+            startIntent.putExtra("cxa.overclockedtoaster.hawkpay.rewardpoints", rewardpoints);
             context.startActivity(startIntent);
         } else {
             Toast toast = Toast.makeText(context, "Invalid Login Credentials", Toast.LENGTH_SHORT);
