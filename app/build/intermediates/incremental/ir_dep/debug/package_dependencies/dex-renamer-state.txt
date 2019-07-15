@@ -1,0 +1,4 @@
+#Sat Jul 13 04:58:17 GMT+08:00 2019
+base.0=C\:\\Users\\joshu\\Desktop\\HawkPay\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\10
+path.0=classes.dex
+renamed.0=classes.dex
